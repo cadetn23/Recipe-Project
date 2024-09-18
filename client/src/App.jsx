@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
-import Login from './components/auth/Login';
-import Signup from './components/auth/Signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
 import RecipeDetail from './components/RecipeDetail';
@@ -20,7 +20,7 @@ function App() {
         <div className="content">
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<RecipeList />} />
+            <Route path="/" element={<RecipeList />} /> 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/recipe/:id" element={<RecipeDetail />} />

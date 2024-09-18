@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { getToken } from './utils/authToken';
+import { getToken } from './authToken';
 
 const AuthRoute = () => {
   // Check if the user is authenticated by verifying if a token exists

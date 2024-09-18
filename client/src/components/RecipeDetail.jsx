@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { secureApiCall } from './utils/Api';
+import { secureApiCall } from './Api';
 
 const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);

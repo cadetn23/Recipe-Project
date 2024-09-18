@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, NavItem, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { getToken, removeToken } from './components/utils/authToken'; // Import auth functions
+import { getToken, removeToken } from './components/authToken'; // Import auth functions
 
 const Navbar = () => {
   const isLoggedIn = !!getToken(); // Check if user is logged in

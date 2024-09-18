@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-
-
+import { secureApiCall, API_BASE_URL } from './utils/Api';
+import { saveToken } from './utils/authToken';
 
 const Signup = () => {
   // Initialize state variables for form fields
@@ -20,58 +20,45 @@ const Signup = () => {
     navigate('/');
   }
 
-  // Handle form submission
   const handleSubmit = async (event) => {
-    // Prevent default form submission behavior
+    // Prevent the default form submission behavior
     event.preventDefault();
 
-    // Check that passwords match
+    // Check if the password and confirm password match
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
+        alert("Passwords do not match");
+        return;
     }
 
-    // Create new user
     try {
-      // Send a POST request to the API_REGISTER_USER endpoint
-      const response = await fetch(`${API_BASE_URL}/api/users/register`,  {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+        // Make an API call to register the user
+        const result = await secureApiCall('/api/users/register', 'POST', {
+            username,
+            email,
+            password,
+        });
 
-      // Check if the response was successful
-      if (response.ok) {
-        // Get the response data
-        const result = await response.json();
-        saveToken(result.token); // Save the token immediately after signup
-        setSuccessMessage('SUCCESS! - Please login!')
+        // Save the token received from the server
+        saveToken(result.token);
 
-        // Navigate to the login page after 2 seconds
+        // Set a success message to display to the user
+        setSuccessMessage('SUCCESS! - Please login!');
+
+        // Wait for 2 seconds, then navigate to the home page
         setTimeout(() => {
-          navigate('/');}, 2000);
+            navigate('/');
+        }, 2000);
 
-
+        // Log the successful signup
         console.log('Signup successful: ', result);
-
-      } else {
-        // Display error if response is not ok
-        const error = await response.json();
-        alert(error.message);
+    } catch (error) {
+        // Log any errors that occur during signup
         console.error('Signup failed:', error);
-      }
 
-    } catch (err) {
-      console.error('Error: ', err);
-      alert('Signup Failed');
+        // Display an alert with the error message or a default message
+        alert(error.message || 'Signup Failed');
     }
-  };
+};
 
   // Render the Signup form
   return (
