@@ -14,9 +14,9 @@ const RecipeDetail = () => {
     const fetchRecipe = async () => {
       try {
         // Make a GET request to fetch recipe details
-        const response = await fetch(`/api/recipe/${id}`);
+        const response = await fetch(`/api/recipes/${id}`);
         
-        // Check if the response is ok (status in the range 200-299)
+        // Check response
         if (!response.ok) {
           throw new Error('Failed to fetch recipe');
         }
