@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { secureApiCall, API_BASE_URL } from './utils/Api';
-import { saveToken } from './utils/authToken';
+import { secureApiCall } from './Api';
+import { saveToken } from './authToken';
 
 const Signup = () => {
   // Initialize state variables for form fields
@@ -50,13 +50,13 @@ const Signup = () => {
         }, 2000);
 
         // Log the successful signup
-        console.log('Signup successful: ', result);
+        console.log('Sign up successful: ', result);
     } catch (error) {
         // Log any errors that occur during signup
-        console.error('Signup failed:', error);
+        console.error('Sign up failed:', error);
 
         // Display an alert with the error message or a default message
-        alert(error.message || 'Signup Failed');
+        alert(error.message || 'Sign up Failed');
     }
 };
 
@@ -114,7 +114,7 @@ const Signup = () => {
           Signup
         </Button>
         <div className="text-center mt-3">
-          <p><i><b>Already a member of The Recipe App?</b></i></p>
+          <p><i><b>Already a member?</b></i></p>
           <Button color='secondary' onClick={handleLoginButton}>
             Login
           </Button>

@@ -6,9 +6,8 @@ import Signup from './components/Signup';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
 import RecipeDetail from './components/RecipeDetail';
-import AuthRoute from './components/AuthRoute'; // 
+import AuthRoute from './components/AuthRoute';
 import './App.css';
-
 
 
 function App() {

@@ -1,34 +1,34 @@
 import React from 'react';
-import { Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Navbar as ReactstrapNavbar, Nav, NavItem, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { getToken, removeToken } from './components/authToken'; // Import auth functions
+import { getToken, removeToken } from './components/authToken';
 
 const Navbar = () => {
-  const isLoggedIn = !!getToken(); // Check if user is logged in
+  const isLoggedIn = !!getToken();
 
   const handleLogout = () => {
-    removeToken(); // Remove the token on logout
-    window.location.reload(); // Refresh the page to update
+    removeToken();
+    window.location.reload();
   };
 
   return (
-    <Navbar color="light" light expand="md">
+    <ReactstrapNavbar color="light" light expand="md">
       <div className="container">
         <Link to="/" className="navbar-brand">
-          Recipe App
+          TasteTopia
         </Link>
         <Nav className="ml-auto" navbar>
           {isLoggedIn ? (
             <>
               <NavItem>
-                <NavLink tag={Link} to="/recipes">
+                <NavLink tag={Link} to="/">
                   Recipes
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} to="/profile">
-                  Profile
+                <NavLink tag={Link} to="/create">
+                  Create Recipe
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -45,15 +45,15 @@ const Navbar = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} to="/register">
-                  Register
+                <NavLink tag={Link} to="/signup">
+                  Signup
                 </NavLink>
               </NavItem>
             </>
           )}
         </Nav>
       </div>
-    </Navbar>
+    </ReactstrapNavbar>
   );
 };
 
