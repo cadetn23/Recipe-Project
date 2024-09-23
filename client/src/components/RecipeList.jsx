@@ -10,7 +10,7 @@ const RecipeList = () => {
     useEffect(() => {
       const fetchRecipes = async () => {
         try {
-          const data = await secureApiCall('/recipes');
+          const data = await secureApiCall('/recipes', 'GET');
           setRecipes(data);
           setLoading(false);
         } catch (err) {

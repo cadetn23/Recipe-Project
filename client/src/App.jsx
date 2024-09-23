@@ -11,7 +11,6 @@ import './App.css';
 
 
 function App() {
-  
   return (
     <Router>
       <div className="App">
@@ -19,13 +18,13 @@ function App() {
         <div className="content">
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<RecipeList />} /> 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/recipe/:id" element={<RecipeDetail />} />
             
-            {/* Protected/Requires authenticaitoin bruh unnecesarrily long word */}
+            {/* Protected routes */}
             <Route element={<AuthRoute />}>
+              <Route path="/" element={<RecipeList />} />
+              <Route path="/recipe/:id" element={<RecipeDetail />} />
               <Route path="/create" element={<RecipeForm />} />
               <Route path="/edit/:id" element={<RecipeForm />} />
             </Route>

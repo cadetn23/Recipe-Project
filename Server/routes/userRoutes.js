@@ -1,9 +1,9 @@
-const express = require('express');
+const router = require("express").Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User'); 
 
-const router = express.Router();
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -38,11 +38,12 @@ router.post('/register', async (req, res) => {
         });
 
         await user.save();
+        console.log('User registered successfully:', user);
 
-        res.status(201).json({ message: "Let's Cook" });
+        res.status(201).json({ message: "Let's Cook", user: { username: user.username, email: user.email } });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Failed to Register error:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 
@@ -57,7 +58,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Find user by email
-        const user = await User.findOne({ email: email.toLowerCase() });
+        const user = await User.findOne({ email});
         if (!user) {
             return res.status(400).json({ message: 'Incorrect Username' });
         }

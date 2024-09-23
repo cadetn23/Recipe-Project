@@ -1,4 +1,4 @@
-import { getToken } from './authToken'; // Import the getToken function from the authToken file
+import { getToken } from './authToken';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
@@ -6,7 +6,7 @@ export const secureApiCall = async (endpoint, method = 'GET', body = null) => {
   const token = getToken();
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
+    'Authorization': token ? `Bearer ${token}` : '',
   };
 
   const config = {
@@ -15,12 +15,17 @@ export const secureApiCall = async (endpoint, method = 'GET', body = null) => {
     body: body ? JSON.stringify(body) : null
   };
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'API call failed');
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || 'API call failed');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('API call error:', error);
+    throw error;
   }
-
-  return response.json();
 };

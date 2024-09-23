@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 // Middleware to authenticate user tokens
 module.exports = function(req, res, next) {
   // Get token from header
-  const token = req.header('x-auth-token');
+  const token = req.header('Authorization')?.replace('Bearer ', '');
   
   // Check if no token
   if (!token) {
@@ -15,7 +15,7 @@ module.exports = function(req, res, next) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     // Add user ID from payload to request object
-    req.user = decoded.userId;
+    req.user = { id: decoded.userId };  // Change this line
     
     // Move to the next middleware
     next();

@@ -6,17 +6,18 @@ const router = express.Router();
 
 const API_KEY = process.env.SPOONACULAR_API_KEY;
 
+
 // Get all recipes (combines Spoonacular Api and user recipes)
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     // Fetch from Spoonacular
     const spoonacularUrl = `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=10`;
     const spoonacularResponse = await fetch(spoonacularUrl);
     const spoonacularData = await spoonacularResponse.json();
-    
+   
     // Fetch user-created recipes
-    const userRecipes = await Recipe.find();
-    
+    const userRecipes = await Recipe.find({ user: req.user.id });
+   
     // Combine and send
     const allRecipes = [
       ...spoonacularData.recipes.map(recipe => ({...recipe, isSpoonacular: true})),
@@ -42,23 +43,21 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Get a specific recipe
+// Get a specific recipe from Spoonacular
 router.get('/:id', async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
-    if (recipe) {
-      return res.json(recipe);
-    }
-    // If not found local, fetch from Spoonacular
     const spoonacularUrl = `https://api.spoonacular.com/recipes/${req.params.id}/information?apiKey=${API_KEY}`;
     const spoonacularResponse = await fetch(spoonacularUrl);
-    const spoonacularRecipe = await spoonacularResponse.json();
-    if (spoonacularRecipe) {
-      return res.json({...spoonacularRecipe, isSpoonacular: true});
+    
+    if (!spoonacularResponse.ok) {
+      throw new Error(`HTTP error! status: ${spoonacularResponse.status}`);
     }
-    return res.status(404).json({ message: 'Recipe not found' });
+    
+    const spoonacularRecipe = await spoonacularResponse.json();
+    res.json(spoonacularRecipe);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching recipe from Spoonacular:', error);
+    res.status(500).json({ message: 'Error fetching recipe details' });
   }
 });
 
