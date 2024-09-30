@@ -49,70 +49,84 @@ const Signup = () => {
     };
 
     return (
-        <Container className="text-center">
-            <h2>Signup</h2>
-            {successMessage && <Alert color="success">{successMessage}</Alert>}
-            <Form onSubmit={handleSubmit}>
+        <div className="min-vh-100 d-flex align-items-center bg-light">
+          <Container className="py-5">
+            <div className="bg-white p-5 rounded shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
+              <h2 className="text-center mb-4">TasteTopia</h2>
+              <h3 className="text-center mb-4 text-muted">Sign Up</h3>
+              {successMessage && <Alert color="success">{successMessage}</Alert>}
+              <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Label for="username">Username</Label>
-                    <Input
-                        type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Enter your username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
+                  <Label for="username" className="form-label">Username</Label>
+                  <Input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                        required
-                    />
+                  <Label for="email" className="form-label">Email</Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password (min 8 characters)"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                  <Label for="password" className="form-label">Password</Label>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password (min 8 characters)"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="confirmPassword">Confirm Password</Label>
-                    <Input
-                        type="password"
-                        name="confirmPassword"
-                        id="confirmPassword"
-                        placeholder="Confirm your password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
+                  <Label for="confirmPassword" className="form-label">Confirm Password</Label>
+                  <Input
+                    type="password"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
-                <Button color="primary" type="submit" block>
-                    Signup
+                <Button color="primary" type="submit" block className="mt-4">
+                  Sign Up
                 </Button>
-                <div className="text-center mt-3">
-                    <p><i><b>Already a member?</b></i></p>
-                    <Button color='secondary' onClick={handleLoginButton}>
-                        Login
-                    </Button>
+              </Form>
+              <div className="text-center mt-4">
+                <div className="position-relative">
+                  <hr className="my-4" />
+                  <span className="position-absolute top-50 start-50 translate-middle px-3 bg-white text-muted">
+                    Already a member?
+                  </span>
                 </div>
-            </Form>
-        </Container>
-    );
-};
+                <Button color="link" onClick={handleLoginButton} className="mt-2">
+                  Log In
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
+      );
+    };
 
 export default Signup;
