@@ -42,46 +42,53 @@ const Login = () => {
     };
 
     return (
-        <Container>
-            <h2 className="text-center">Login</h2>
-            {error && <Alert color="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input 
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                        required
-                    />
+        <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+          <Container className="p-4">
+            <div className="bg-white p-5 rounded shadow" style={{ maxWidth: '400px', margin: 'auto' }}>
+              <h2 className="text-center mb-4 text-primary">TasteTopia</h2>
+              <h3 className="text-center mb-4 text-muted">Login</h3>
+              {error && <div className="alert alert-danger">{error}</div>}
+              <Form onSubmit={handleSubmit}>
+                <FormGroup className="mb-3">
+                  <Label for="email" className="form-label fw-bold">Email</Label>
+                  <Input 
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                <FormGroup className="mb-4">
+                  <Label for="password" className="form-label fw-bold">Password</Label>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="form-control"
+                  />
                 </FormGroup>
-                <Button color="primary" type="submit" block>
-                    Login
+                <Button color="primary" type="submit" block className="mb-4">
+                  Login
                 </Button>
-                <div className="text-center mt-3">
-                    <p><i><b>New to the Recipe App?</b></i></p>
-                    <Button color="secondary" onClick={handleCreateUserButton}>
-                        Create User
-                    </Button>
-                </div>
-            </Form>
-        </Container>
-    );
-};
-
-export default Login;
+              </Form>
+              <div className="text-center mt-3">
+                <p className="text-muted">New to TasteTopia?</p>
+                <Button color="link" onClick={handleCreateUserButton} className="p-0">
+                  Create User
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
+      );
+    };
+    
+    export default Login;

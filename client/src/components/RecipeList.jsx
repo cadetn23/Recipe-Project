@@ -35,23 +35,27 @@ const RecipeList = () => {
     if (error) return <div>Error: {error}</div>;
  
     return (
-      <div>
-        <h1>Recipes</h1>
-        <Link to="/create">Create New Recipe</Link>
-        <ul>
+      <div className="recipes-container">
+        <div className="recipes-header">
+          <h1 className="recipes-title">Discover Recipes</h1>
+          <Link to="/create-recipe" className="create-recipe-btn">Create New Recipe</Link>
+        </div>
+        <div className="recipe-grid">
           {recipes.map((recipe) => (
-            <li key={recipe.id || recipe._id}>
-              <h2>{recipe.title}</h2>
-              {recipe.image && <img src={recipe.image} alt={recipe.title} style={{width: '200px'}} />}
-              <Link to={`/recipe/${recipe.id || recipe._id}`}>View Details</Link>
-              {recipe.isSpoonacular && (
-                <button onClick={() => handleSaveSpoonacular(recipe)}>Save to My Recipes</button>
-              )}
-            </li>
+            <div key={recipe.id} className="recipe-card">
+              <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+              <div className="recipe-content">
+                <h2 className="recipe-title">{recipe.title}</h2>
+                <div className="recipe-actions">
+                  <Link to={`/recipe/${recipe.id}`} className="btn btn-view">View</Link>
+                  <button className="btn btn-save">Save</button>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     );
-}
-
-export default RecipeList;
+  };
+  
+  export default RecipeList;

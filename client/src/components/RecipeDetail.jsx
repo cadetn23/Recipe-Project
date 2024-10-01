@@ -31,20 +31,32 @@ const RecipeDetail = () => {
   if (!recipe) return <div>Recipe not found</div>;
 
   return (
-    <div className="recipe-detail">
-      <h1>{recipe.title}</h1>
-      {recipe.image && (
-        <img src={recipe.image} alt={recipe.title} style={{ width: '300px' }} />
-      )}
-      <h2>Ingredients:</h2>
-      <ul>
-        {recipe.extendedIngredients.map((ingredient, index) => (
-          <li key={index}>{ingredient.original}</li>
-        ))}
-      </ul>
-      <h2>Instructions:</h2>
-      <div dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
-      <Link to="/">Back to Recipes</Link>
+    <div className="recipe-detail-container">
+      <div className="recipe-detail">
+        <h1 className="recipe-title">{recipe.title}</h1>
+        <div className="recipe-content">
+          <div className="recipe-image-container">
+            {recipe.image && (
+              <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+            )}
+          </div>
+          <div className="recipe-info">
+            <section className="ingredients-section">
+              <h2>Ingredients:</h2>
+              <ul className="ingredients-list">
+                {recipe.extendedIngredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient.original}</li>
+                ))}
+              </ul>
+            </section>
+            <section className="instructions-section">
+              <h2>Instructions:</h2>
+              <div className="instructions" dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
+            </section>
+          </div>
+        </div>
+        <Link to="/" className="back-link">Back to Recipes</Link>
+      </div>
     </div>
   );
 };
