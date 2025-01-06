@@ -8,7 +8,7 @@ export const getToken=()=>{
     return localStorage.getItem('authToken');
 };
 
-//logout (remove token) from local storage
+//Remove token from local storage
 export const removeToken=()=>{
     localStorage.removeItem('authToken');
 };

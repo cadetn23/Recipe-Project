@@ -6,7 +6,6 @@ const router = express.Router();
 
 const API_KEY = process.env.SPOONACULAR_API_KEY;
 
-
 // Get all recipes (combines Spoonacular Api and user recipes)
 router.get('/', auth, async (req, res) => {
   try {
@@ -43,9 +42,18 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Get a specific recipe from Spoonacular
-router.get('/:id', async (req, res) => {
+// Get a specific recipe (handles both Spoonacular and user-created recipes)
+router.get('/:id', auth, async (req, res) => {
   try {
+    // First try to find if it's a user-created recipe
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      const userRecipe = await Recipe.findById(req.params.id);
+      if (userRecipe) {
+        return res.json(userRecipe);
+      }
+    }
+    
+    // If not found or not a MongoDB id, try Spoonacular
     const spoonacularUrl = `https://api.spoonacular.com/recipes/${req.params.id}/information?apiKey=${API_KEY}`;
     const spoonacularResponse = await fetch(spoonacularUrl);
     
@@ -56,7 +64,7 @@ router.get('/:id', async (req, res) => {
     const spoonacularRecipe = await spoonacularResponse.json();
     res.json(spoonacularRecipe);
   } catch (error) {
-    console.error('Error fetching recipe from Spoonacular:', error);
+    console.error('Error fetching recipe:', error);
     res.status(500).json({ message: 'Error fetching recipe details' });
   }
 });
@@ -102,6 +110,19 @@ router.post('/:id/rate', auth, async (req, res) => {
     await recipe.save();
     res.json({ averageRating: recipe.averageRating });
   } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/user/:id', auth, async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+    res.json(recipe);
+  } catch (error) {
+    console.error('Error fetching user recipe:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
